@@ -10,9 +10,10 @@ module Validator
     end
 
     def supported?
-      valid = @subject =~ (/^(\(*)(0800|0508|0900)(\)*)/)
-      $validator_log.info "LetterValidator => not supported : #{@subject}" unless valid
-      valid
+      target = @subject.split(/^(\(*)(0800|0508|0900)(\)*)/)[4]
+      supported = !(target =~ /[a-zA-Z]+/).nil?
+      $validator_log.info "LetterValidator => not supported : #{@subject}" unless supported
+      supported
     end
 
     def validate
@@ -20,15 +21,21 @@ module Validator
         raise 'No supporting validator registered' unless @next
         return @next.validate
       end
-      case
-        when @subject.match(/^(\(*)0800(\)*)/)
-          valid = !(@subject =~ /^(\(*)0800(\)*)(\s)*[0-9]{0,7}[a-zA-Z]{0,9}$/).nil?
-        when @subject.match(/^(\(*)(0508)(\)*)/)
-          valid = !(@subject. =~ /^(\(*)0508(\)*)(\s)*[0-9]{0,6}[a-zA-Z]{0,9}$/).nil?
-        when @subject.match(/^(\(*)0900(\)*)/)
-          valid = !(@subject =~ /^(\(*)0900(\)*)(\s)*[0-9]{0,5}[a-zA-Z]{0,9}$/).nil?
-        else
-          valid = false
+      valid = true
+      target =  @subject.rstrip.lstrip.gsub(/\s+/, '').gsub(/\(+/, '').gsub(/\)+/, '').gsub(/(-)+/, '')
+      length = target.length
+      if target.start_with?('0800')
+        if length > 11
+          valid = !(target.match("[a-zA-Z]{#{length - 11}}$")).nil?
+        end
+      elsif target.start_with?('0508')
+        if length > 10
+          valid = !(target.match"[a-zA-Z]{#{length - 10}}$").nil?
+        end
+      elsif target.start_with?('0900')
+        if length > 9
+          valid = !(target.match"[a-zA-Z]{#{length - 9}}$").nil?
+        end
       end
       unless valid
         $validator_log.error "LetterValidator => subject : #{@subject}, Validation Failed"

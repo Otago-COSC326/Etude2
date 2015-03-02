@@ -5,153 +5,158 @@ module Validator
   describe Validator::LetterValidator do
 
     describe 'supported?' do
-      it 'should support if number starts with 0800 or (0800)' do
+      it 'should support if number starts with 0800 or (0800) and contains alphabets' do
+        validator = LetterValidator.new
+        validator.subject = '0800ABC1D34'
+        expect(validator.supported?).to be_truthy
+
+        validator.subject = '(0800)0800ABC1D34'
+        expect(validator.supported?).to be_truthy
+      end
+
+      it 'should support if number starts with 0800 or (0800) but does not contain alphabets' do
         validator = LetterValidator.new
         validator.subject = '0800'
-        expect {validator.supported?}.not_to raise_error
-        validator.subject = '(0800)'
-        expect {validator.supported?}.not_to raise_error
-      end
-
-      it 'should support if number starts with 0508 or (0508)' do
-        validator = LetterValidator.new
-        validator.subject = '0508'
-        expect {validator.supported?}.not_to raise_error
-        validator.subject = '(0508)'
-        expect {validator.supported?}.not_to raise_error
-      end
-
-      it 'should support if number starts with 0900 or (0900)' do
-        validator = LetterValidator.new
-        validator.subject = '0900'
-        expect {validator.supported?}.not_to raise_error
-        validator.subject = '(0900)'
-        expect {validator.supported?}.not_to raise_error
-      end
-
-      it 'should not support if number not start with 0800, 0508 or 0900' do
-        validator = LetterValidator.new
-        validator.subject = '34324'
         expect(validator.supported?).to be_falsey
-        validator.subject = '(2342)'
+
+        validator.subject = '0800 12345'
+        expect(validator.supported?).to be_falsey
+
+        validator.subject = '(0800) 12345'
         expect(validator.supported?).to be_falsey
       end
+
     end
 
     describe 'validate' do
+
       describe '0800' do
-        it 'should be valid when 0800123456ABCDEFGHI' do
+        it 'should be valid if number = 0800 12345A' do
           validator = LetterValidator.new
-          validator.subject = '0800123456ABCDEFGHI'
-          expect {validator.validate}.not_to raise_error
+          validator.subject = '0800 12345A'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be invalid when 08001234567ABCDEFGHIJ' do
+        it 'should be valid if number = 0800 12345AB' do
           validator = LetterValidator.new
-          validator.subject = '08001234567ABCDEFGHIJ'
-          expect {validator.validate}.to raise_error ValidationError
+          validator.subject = '0800 12345AB'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be valid when #digits == 6 [0800 123456]' do
+        it 'should be valid if number = 0800 12345ABC' do
           validator = LetterValidator.new
-          validator.subject = '0800 123456'
-          expect {validator.validate}.not_to raise_error
+          validator.subject = '0800 12345ABC'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be valid when #digits == 7 [0800 1234567]' do
+        it 'should be valid if number = 0800 12345ABCD' do
           validator = LetterValidator.new
-          validator.subject = '0800 1234567'
-          expect {validator.validate}.not_to raise_error
+          validator.subject = '0800 12345ABCD'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be invalid when #digits > 7 digits [0800 12345678]' do
+        it 'should be valid if number = 0800 ABCDEFGHI' do
           validator = LetterValidator.new
-          validator.subject = '0800 12345678'
-          expect {validator.validate}.to raise_error ValidationError
+          validator.subject = '0800 ABCDEFGHI'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be valid when #letters == 0 [0800 1234567]' do
+        it 'should be valid if number = 0800 ABCDEFG89' do
           validator = LetterValidator.new
-          validator.subject = '0800 1234567'
-          expect {validator.validate}.not_to raise_error
+          validator.subject = '0800 ABCDEFG89'
+          expect {validator.validate}.to raise_exception ValidationError
         end
 
-        it 'should be valid when #letters <= 9 [0800 1234567ABCDEFGHS]' do
+        it 'should be valid if number = 0800 1B3A4ABCD' do
           validator = LetterValidator.new
-          validator.subject = '0800 1234567ABCDEFGHS'
-          expect {validator.validate}.not_to raise_error
-        end
-
-        it 'should be invalid when #letters > 9 [0800 1234567ABCDEFGHST]' do
-          validator = LetterValidator.new
-          validator.subject = '0800 1234567ABCDEFGHST'
-          expect {validator.validate}.to raise_error ValidationError
+          validator.subject = '0800 1B3A4ABCD'
+          expect {validator.validate}.not_to raise_exception
         end
       end
 
       describe '0508' do
-        it 'should be valid when 0508123456ABCDEFGHI' do
+        it 'should be valid if number = 0508 12345A' do
           validator = LetterValidator.new
-          validator.subject = '0508123456ABCDEFGHI'
-          expect {validator.validate}.not_to raise_error
+          validator.subject = '0508 12345A'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be valid when 05081234567ABCDEFGHI' do
+        it 'should be valid if number = 0508 123456ABC' do
           validator = LetterValidator.new
-          validator.subject = '05081234567ABCDEFGHI'
-          expect {validator.validate}.to raise_error ValidationError
+          validator.subject = '0508 123456ABC'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be valid when 0508123456ABCDEFGHIJ' do
+        it 'should be valid if number = 0508 ABC12D' do
           validator = LetterValidator.new
-          validator.subject = '0508123456ABCDEFGHIJ'
-          expect {validator.validate}.to raise_error ValidationError
+          validator.subject = '0508 ABC12D'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be valid when #digits == 6 [0508 123456]' do
+        it 'should be valid if number = 0508 ABCDETCGH' do
           validator = LetterValidator.new
-          validator.subject = '0508 123456'
-          expect {validator.validate}.not_to raise_error
+          validator.subject = '0508 ABCDETCGH'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be valid when #digits == 0 [0508 TTTT]' do
+        it 'should be valid if number = 0508 ABCDEF7HG' do
           validator = LetterValidator.new
-          validator.subject = '0508 TTTT'
-          expect {validator.validate}.not_to raise_error
+          validator.subject = '0508 ABCDEF7HG'
+          expect {validator.validate}.to raise_exception ValidationError
+        end
+
+        it 'should be valid if number = 0508 ABCDE666' do
+          validator = LetterValidator.new
+          validator.subject = '0508 ABCDE666'
+          expect {validator.validate}.to raise_exception ValidationError
         end
       end
 
       describe '0900' do
-        it 'should be valid when 090012345ABCDEFGHI' do
+        it 'should be valid if number = 0900 12345A' do
           validator = LetterValidator.new
-          validator.subject = '090012345ABCDEFGHI'
-          expect {validator.validate}.not_to raise_error
+          validator.subject = '0900 12345A'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be valid when 0900123456ABCDEFGHI' do
+        it 'should be valid if number = 0900 12345ABCD' do
           validator = LetterValidator.new
-          validator.subject = '0900123456ABCDEFGHI'
-          expect {validator.validate}.to raise_error ValidationError
+          validator.subject = '0900 12345ABCD'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be valid when 090012345ABCDEFGHIJ' do
+        it 'should be valid if number = 0900 ABC12' do
           validator = LetterValidator.new
-          validator.subject = '090012345ABCDEFGHIJ'
-          expect {validator.validate}.to raise_error ValidationError
+          validator.subject = '0900 ABC12'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be valid when #digits == 5 [0900 12345]' do
+        it 'should be valid if number = 0508 ABCDETCGH' do
           validator = LetterValidator.new
-          validator.subject = '0900 12345'
-          expect {validator.validate}.not_to raise_error
+          validator.subject = '0508 ABCDETCGH'
+          expect {validator.validate}.not_to raise_exception
         end
 
-        it 'should be valid when #digits == 0 [0900 TTTT]' do
+        it 'should be valid if number = 0900 ABC7DERT' do
           validator = LetterValidator.new
-          validator.subject = '0900 TTTT'
-          expect {validator.validate}.not_to raise_error
+          validator.subject = '0900 ABC7DERT'
+          expect {validator.validate}.not_to raise_exception
+        end
+
+        it 'should be valid if number = 0900 ABC7DERT7' do
+          validator = LetterValidator.new
+          validator.subject = '0900 ABC7DERT7'
+          expect {validator.validate}.to raise_exception ValidationError
+        end
+
+        it 'should be valid if number = 0900 ABC7DE777' do
+          validator = LetterValidator.new
+          validator.subject = '0900 ABC7DE777'
+          expect {validator.validate}.to raise_exception ValidationError
         end
       end
+
     end
+
   end
 end
