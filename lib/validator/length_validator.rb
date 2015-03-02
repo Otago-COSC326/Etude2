@@ -5,11 +5,7 @@ module Validator
     attr_accessor :subject
 
     def initialize(subject = nil,
-                   min = 9,
-                   max = 13,
                    next_validator = nil)
-      @min = min
-      @max = max
       @subject = subject
       @next = next_validator
     end
@@ -19,14 +15,26 @@ module Validator
     end
 
     def validate
-      target = @subject.rstrip.lstrip.gsub(/\s+/, '').gsub(/\(+/, '').gsub(/\)+/, '').gsub(/(-)+/, '')
+      target = Formatter::NoiseFormatter.new.format @subject
       valid = false
       if target.start_with?('0508')
-        valid = (target.length == 10)
+        if target.match(/[a-zA-Z]+/)
+          valid = ((4..13).include?(target.length))
+        else
+          valid = (target.length == 10)
+        end
       elsif target.start_with?('0800')
-        valid = ([10, 11].include?(target.length))
+        if target.match(/[a-zA-Z]+/)
+          valid = ((4..13).include?(target.length))
+        else
+          valid = ([10, 11].include?(target.length))
+        end
       elsif target.start_with?('0900')
-        valid = (target.length == 9)
+        if target.match(/[a-zA-Z]+/)
+          valid = ((4..13).include?(target.length))
+        else
+          valid = (target.length == 9)
+        end
       elsif target.start_with?('021')
         valid = ((9..11).include?(target.length))
       elsif target.start_with?('022', '027')
@@ -37,7 +45,7 @@ module Validator
         valid = (target.length == 9)
       end
       unless valid
-        $validator_log.error "LengthValidator(#{@min}...#{@max}) => subject : #{@subject}, current length : #{@subject.length}"
+        $validator_log.error "LengthValidator => subject : #{@subject}, current length : #{@subject.length}"
         raise ValidationError.new "#{@subject} INV"
       end
       @next.validate if @next

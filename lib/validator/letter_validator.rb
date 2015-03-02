@@ -22,7 +22,7 @@ module Validator
         return @next.validate
       end
       valid = true
-      target =  @subject.rstrip.lstrip.gsub(/\s+/, '').gsub(/\(+/, '').gsub(/\)+/, '').gsub(/(-)+/, '')
+      target =  Formatter::NoiseFormatter.new.format @subject
       length = target.length
       if target.start_with?('0800')
         if length > 11

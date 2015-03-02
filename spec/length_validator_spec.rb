@@ -16,6 +16,15 @@ module Validator
       expect {validator.validate}.to raise_error ValidationError
     end
 
+    it 'should be valid if start with 0508 and have alphabets' do
+      validator = LengthValidator.new
+      validator.subject = '0508 4PIPELINE'
+      expect {validator.validate}.not_to raise_error
+
+      validator.subject = '0508 4PIPELINETOOLONG'
+      expect {validator.validate}.to raise_error ValidationError
+    end
+
     it 'should be valid if start with 0800 and have 6 digits' do
       validator = LengthValidator.new
       validator.subject = '0800 123456'
@@ -28,6 +37,15 @@ module Validator
       expect {validator.validate}.to raise_error ValidationError
     end
 
+    it 'should be valid if start with 0800 and have alphabets' do
+      validator = LengthValidator.new
+      validator.subject = '0800 4PIPELINE'
+      expect {validator.validate}.not_to raise_error
+
+      validator.subject = '0800 4PIPELINETOOLONG'
+      expect {validator.validate}.to raise_error ValidationError
+    end
+
     it 'should be valid if start with 0800 and have 7 digits' do
       validator = LengthValidator.new
       validator.subject = '0800 1234567'
@@ -37,6 +55,18 @@ module Validator
       expect {validator.validate}.to raise_error ValidationError
 
       validator.subject = '0800 12345'
+      expect {validator.validate}.to raise_error ValidationError
+    end
+
+    it 'should be valid if start with 0800 and have alphabets' do
+      validator = LengthValidator.new
+      validator.subject = '0900 4PIPELINE'
+      expect {validator.validate}.not_to raise_error
+
+      validator.subject = '0900 TOGOGO'
+      expect {validator.validate}.not_to raise_error
+
+      validator.subject = '0900 4PIPELINETOOLONG'
       expect {validator.validate}.to raise_error ValidationError
     end
 

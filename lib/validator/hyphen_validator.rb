@@ -10,9 +10,9 @@ module Validator
     end
 
     def supported?
-      valid = (@subject =~ (/(-)+/))
-      $validator_log.info "HyphenValidator => not supported : #{@subject}" unless valid
-      valid
+      supported = (@subject =~ (/(-)+/))
+      $validator_log.info "HyphenValidator => not supported : #{@subject}" unless supported
+      supported
     end
 
     def validate
@@ -24,8 +24,8 @@ module Validator
       area_code_regex = /^(((02)(?!1|2|5|7))|(0[3-9]))/
       mobile_regex = /^(021|022|027|025)/
       target = ''
-      formatted = @subject.rstrip.lstrip.gsub(/\s+/, '').gsub(/\(+/, '').gsub(/\)+/, '').gsub(/(-)+/, '')
-      formatted_with_hypen = @subject.rstrip.lstrip.gsub(/\s+/, '').gsub(/\(+/, '').gsub(/\)+/, '')
+      formatted = Formatter::NoiseFormatter.new.format(@subject)
+      formatted_with_hypen = Formatter::NoiseFormatter.new(['-'], nil).format(@subject)
       if !(code_match = formatted.match(initial_code_regex)).nil?
         target = code_match[2]
       elsif !(area_match = formatted.match(area_code_regex)).nil?
@@ -34,7 +34,6 @@ module Validator
         target = mobile_match[1]
       end
 
-      # TODO: QUESTION => What happened if 0800,0508,0900 has 9 number when use with letter
       case target
         when '0508', '0800'
           if formatted.split(target)[1].length == 8

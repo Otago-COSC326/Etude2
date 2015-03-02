@@ -163,6 +163,9 @@ module Validator
           validator.subject = '02 409-2222'
           expect {validator.validate}.not_to raise_exception
 
+          validator.subject = '02 323-4567'
+          expect {validator.validate}.not_to raise_exception
+
           validator.subject = '02-409-2222'
           expect {validator.validate}.to raise_exception ValidationError
         end

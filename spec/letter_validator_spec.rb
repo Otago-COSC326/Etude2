@@ -55,6 +55,12 @@ module Validator
           expect {validator.validate}.not_to raise_exception
         end
 
+        it 'should be valid if number = 0800 4PIPELINE' do
+          validator = LetterValidator.new
+          validator.subject = '0800 4PIPELINE'
+          expect {validator.validate}.not_to raise_exception
+        end
+
         it 'should be valid if number = 0800 ABCDEFGHI' do
           validator = LetterValidator.new
           validator.subject = '0800 ABCDEFGHI'
