@@ -376,7 +376,7 @@ module Source
           process = -> {
             CLI.process_input('090012345')
           }
-          expect(process).to  output("0900 12345\n").to_stdout
+          expect(process).to  output("0900 12345 DUP\n").to_stdout
         end
 
         it '0900 12345 -> 0900 12345' do
@@ -384,7 +384,7 @@ module Source
           process = -> {
             CLI.process_input('0900 12345')
           }
-          expect(process).to  output("0900 12345\n").to_stdout
+          expect(process).to  output("0900 12345 DUP\n").to_stdout
         end
 
         it '(0900)12345 -> 0900 12345' do
@@ -392,7 +392,7 @@ module Source
           process = -> {
             CLI.process_input('(0900)12345')
           }
-          expect(process).to  output("0900 12345\n").to_stdout
+          expect(process).to  output("0900 12345 DUP\n").to_stdout
         end
 
         it '(0900) 12345 -> 0900 12345' do
@@ -400,7 +400,7 @@ module Source
           process = -> {
             CLI.process_input('(0900) 12345')
           }
-          expect(process).to  output("0900 12345\n").to_stdout
+          expect(process).to  output("0900 12345 DUP\n").to_stdout
         end
       end
 
