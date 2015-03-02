@@ -1,6 +1,5 @@
 require 'validator/validator'
 require 'source'
-require 'spec_helper'
 
 module Validator
   describe Validator::EmergencyFragmentValidator do

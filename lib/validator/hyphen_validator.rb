@@ -20,6 +20,10 @@ module Validator
         raise 'No supporting validator registered' unless @next
         return @next.validate
       end
+      if @subject.match /[a-zA-Z]/
+        $validator_log.error "HyphenValidator => subject : #{@subject}, Validation Failed"
+        raise ValidationError.new "#{@subject} INV"
+      end
       initial_code_regex = /^(\(*)(0800|0508|0900)(\)*)/
       area_code_regex = /^(((02)(?!1|2|5|7))|(0[3-9]))/
       mobile_regex = /^(021|022|027|025)/

@@ -36,6 +36,18 @@ module Validator
           expect {validator.validate}.to raise_exception ValidationError
         end
 
+        it 'should be invalid when number contains letters' do
+          validator = HyphenValidator.new
+          validator.subject = '0800 2222-abc'
+          expect {validator.validate}.to raise_exception ValidationError
+
+          validator.subject = '0800-def-2222'
+          expect {validator.validate}.to raise_exception ValidationError
+
+          validator.subject = '0800-get-222'
+          expect {validator.validate}.to raise_exception ValidationError
+        end
+
         it 'should be valid when number starts with 0800, 7 digits and hypen is at index 7' do
           validator = HyphenValidator.new
           validator.subject = '0800 222-2222'

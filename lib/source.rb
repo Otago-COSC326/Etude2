@@ -11,6 +11,10 @@ module Source
 
   class CLI
 
+    def self.reset
+      @number_store = Set.new
+    end
+
     @number_store = Set.new
 
     def self.start

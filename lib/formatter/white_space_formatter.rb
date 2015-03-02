@@ -29,7 +29,9 @@ module Formatter
         end
       elsif target.match(/^(021|022|025|027)/)
         result = target.insert 3, ' '
-        if target.length - 4 == 7
+        if target.length - 4 == 6
+          result = target.insert 7, ' '
+        elsif target.length - 4 == 7
           result = target.insert 7, ' '
         elsif target.length - 4 == 8
           result = target.insert 8, ' '
