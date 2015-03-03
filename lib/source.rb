@@ -18,6 +18,7 @@ module Source
     @number_store = Set.new
 
     def self.start
+      reset
       begin
         $stdin.each_line do |line|
           process_input line.chomp
