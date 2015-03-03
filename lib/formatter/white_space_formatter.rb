@@ -37,7 +37,7 @@ module Formatter
           result = target.insert 8, ' '
         end
       end
-      $formatter_log.info "WhiteSpaceFormatter => Formatted : #{result}" unless result
+      # $formatter_log.info "WhiteSpaceFormatter => Formatted : #{result}" unless result
       result
     end
   end

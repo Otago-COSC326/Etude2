@@ -22,7 +22,7 @@ module Formatter
     def supported?(subject)
       target = subject.split(/^(\(*)(0800|0508|0900)(\)*)/)[4]
       supported = !(target =~ /[a-zA-Z]+/).nil?
-      $formatter_log.info "LetterValidator => not supported : #{subject}" unless supported
+      # $formatter_log.info "LetterValidator => not supported : #{subject}" unless supported
       supported
     end
 
@@ -46,7 +46,7 @@ module Formatter
           end
         end
       end
-      $formatter_log.info "LetterValidator => Formatted : #{workon}" unless workon
+      # $formatter_log.info "LetterValidator => Formatted : #{workon}" unless workon
       workon
     end
   end

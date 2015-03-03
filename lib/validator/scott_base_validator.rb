@@ -13,7 +13,7 @@ module Validator
 
     def supported?
       valid = (!(@subject =~ /^02(?!1|2|5|7)/).nil? && @subject.start_with?('02'))
-      $validator_log.info "ScottBaseValdiator => not supported : #{@subject}" unless valid
+      # $validator_log.info "ScottBaseValdiator => not supported : #{@subject}" unless valid
       valid
     end
 
@@ -25,7 +25,7 @@ module Validator
       target = Formatter::NoiseFormatter.new.format @subject
       valid = target.start_with? '02409'
       unless valid
-        $validator_log.error "ScottBaseValdiator => subject : #{@subject}, Validation Failed"
+        # $validator_log.error "ScottBaseValdiator => subject : #{@subject}, Validation Failed"
         raise ValidationError.new "#{@subject} INV"
       end
       @next.validate if @next

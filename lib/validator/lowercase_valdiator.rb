@@ -20,7 +20,7 @@ module Validator
         return @next.validate
       end
       if @subject.match /[a-z]/
-        $validator_log.error "LowercaseValidator => subject : #{@subject}, Validation Failed"
+        # $validator_log.error "LowercaseValidator => subject : #{@subject}, Validation Failed"
         raise ValidationError.new "#{@subject} INV"
       end
       @next.validate if @next

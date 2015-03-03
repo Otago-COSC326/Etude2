@@ -12,7 +12,7 @@ module Validator
     def supported?
       target = @subject.split(/^(\(*)(0800|0508|0900)(\)*)/)[4]
       supported = !(target =~ /[a-zA-Z]+/).nil?
-      $validator_log.info "LetterValidator => not supported : #{@subject}" unless supported
+      # $validator_log.info "LetterValidator => not supported : #{@subject}" unless supported
       supported
     end
 
@@ -38,7 +38,7 @@ module Validator
         end
       end
       unless valid
-        $validator_log.error "LetterValidator => subject : #{@subject}, Validation Failed"
+        # $validator_log.error "LetterValidator => subject : #{@subject}, Validation Failed"
         raise ValidationError.new "#{@subject} INV"
       end
       @next.validate if @next

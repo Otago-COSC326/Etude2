@@ -30,7 +30,7 @@ module Formatter
       unless @excludes.include? '-'
         target = target.gsub(/(-)+/, '')
       end
-      $formatter_log.info "NoiseFormatter => Formatted : #{target}" unless target
+      # $formatter_log.info "NoiseFormatter => Formatted : #{target}" unless target
       target
     end
   end

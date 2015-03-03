@@ -45,7 +45,7 @@ module Validator
         valid = (target.length == 9)
       end
       unless valid
-        $validator_log.error "LengthValidator => subject : #{@subject}, current length : #{@subject.length}"
+        # $validator_log.error "LengthValidator => subject : #{@subject}, current length : #{@subject.length}"
         raise ValidationError.new "#{@subject} INV"
       end
       @next.validate if @next

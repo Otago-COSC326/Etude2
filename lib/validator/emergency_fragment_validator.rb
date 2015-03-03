@@ -14,7 +14,7 @@ module Validator
     def supported?
       subject = Formatter::NoiseFormatter.new.format(@subject)
       valid = subject.start_with?('03', '04', '06', '07', '09')
-      $validator_log.info "EmergencyFragmentValidator => not supported : #{@subject}" unless valid
+      # $validator_log.info "EmergencyFragmentValidator => not supported : #{@subject}" unless valid
       valid
     end
 
@@ -30,7 +30,7 @@ module Validator
           '03999', '04999', '06999', '07999', '09999'
       )
       unless valid
-        $validator_log.error "EmergencyFragmentValidator => subject : #{@subject}, Validation Failed"
+        # $validator_log.error "EmergencyFragmentValidator => subject : #{@subject}, Validation Failed"
         raise ValidationError.new "#{@subject} INV"
       end
       @next.validate if @next

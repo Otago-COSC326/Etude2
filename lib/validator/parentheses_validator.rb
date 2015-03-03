@@ -11,7 +11,7 @@ module Validator
 
     def supported?
       valid = @subject =~ (/^(\()|(\))/)
-      $validator_log.info "ParentheseValidator => not supported : #{@subject}" unless valid
+      # $validator_log.info "ParentheseValidator => not supported : #{@subject}" unless valid
       valid
     end
 
@@ -21,7 +21,7 @@ module Validator
         return @next.validate
       end
       unless @subject =~ /\(\d{2,4}\)/
-        $validator_log.error "ParentheseValidator => subject : #{@subject}, Validation Failed"
+        # $validator_log.error "ParentheseValidator => subject : #{@subject}, Validation Failed"
         raise ValidationError.new "#{@subject} INV"
       end
       @next.validate if @next

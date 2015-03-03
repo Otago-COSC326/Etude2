@@ -11,7 +11,7 @@ module Validator
 
     def supported?
       supported = (@subject =~ (/(-)+/))
-      $validator_log.info "HyphenValidator => not supported : #{@subject}" unless supported
+      # $validator_log.info "HyphenValidator => not supported : #{@subject}" unless supported
       supported
     end
 
@@ -21,7 +21,7 @@ module Validator
         return @next.validate
       end
       if @subject.match /[a-zA-Z]/
-        $validator_log.error "HyphenValidator => subject : #{@subject}, Validation Failed"
+        # $validator_log.error "HyphenValidator => subject : #{@subject}, Validation Failed"
         raise ValidationError.new "#{@subject} INV"
       end
       initial_code_regex = /^(\(*)(0800|0508|0900)(\)*)/
@@ -68,7 +68,7 @@ module Validator
       end
 
       unless valid
-        $validator_log.error "HyphenValidator => subject : #{@subject}, Validation Failed"
+        # $validator_log.error "HyphenValidator => subject : #{@subject}, Validation Failed"
         raise ValidationError.new "#{@subject} INV"
       end
       @next.validate if @next

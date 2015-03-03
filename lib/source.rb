@@ -6,8 +6,8 @@ require 'set'
 
 module Source
 
-  $validator_log = Logger.new('log/validator.log', 0, 100 * 1024 * 1024)
-  $formatter_log = Logger.new('log/formatter.log', 0, 100 * 1024 * 1024)
+  # $validator_log = Logger.new('log/validator.log', 0, 100 * 1024 * 1024)
+  # $formatter_log = Logger.new('log/formatter.log', 0, 100 * 1024 * 1024)
 
   class CLI
 

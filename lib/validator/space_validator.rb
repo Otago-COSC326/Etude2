@@ -44,7 +44,7 @@ module Validator
           valid = false
       end
       unless valid
-        $validator_log.error "SpaceValidator => subject : #{@subject}, Validation Failed"
+        # $validator_log.error "SpaceValidator => subject : #{@subject}, Validation Failed"
         raise ValidationError.new "#{@subject} INV"
       end
       @next.validate if @next
