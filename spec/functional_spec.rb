@@ -22,7 +22,7 @@ module Source
           process = -> {
             CLI.process_input('0508 345678')
           }
-          expect(process).to  output("0508 345 678\n").to_stdout
+          expect(process).to  output("0508 345678 INV\n").to_stdout
         end
 
         it '(0508)357345 -> 0508 357 345' do
@@ -32,11 +32,11 @@ module Source
           expect(process).to  output("0508 357 345\n").to_stdout
         end
 
-        it '(0508) 543678 -> 0508 543 678' do
+        it '(0508) 543678 -> (0508) 543678 INV\n' do
           process = -> {
             CLI.process_input('(0508) 543678')
           }
-          expect(process).to  output("0508 543 678\n").to_stdout
+          expect(process).to  output("(0508) 543678 INV\n").to_stdout
         end
 
         it '(0508)536-345 -> 0508 536 345' do
@@ -137,28 +137,12 @@ module Source
           expect(process).to  output("0508 123 456 DUP\n").to_stdout
         end
 
-        it '0508 345678 -> 0508 345 678 DUP' do
-          CLI.process_input('0508 345678')
-          process = -> {
-            CLI.process_input('0508 345678')
-          }
-          expect(process).to  output("0508 345 678 DUP\n").to_stdout
-        end
-
         it '(0508)357345 -> 0508 357 345' do
           CLI.process_input('(0508)357345')
           process = -> {
             CLI.process_input('(0508)357345')
           }
           expect(process).to  output("0508 357 345 DUP\n").to_stdout
-        end
-
-        it '(0508) 543678 -> 0508 543 678' do
-          CLI.process_input('(0508) 543678')
-          process = -> {
-            CLI.process_input('(0508) 543678')
-          }
-          expect(process).to  output("0508 543 678 DUP\n").to_stdout
         end
       end
 
@@ -184,11 +168,11 @@ module Source
           expect(process).to  output("0800 876 234\n").to_stdout
         end
 
-        it '(0800) 456234 -> 0800 456 234' do
+        it '(0800) 456234 -> (0800) 456234 INV\n' do
           process = -> {
             CLI.process_input('(0800) 456234')
           }
-          expect(process).to  output("0800 456 234\n").to_stdout
+          expect(process).to  output("(0800) 456234 INV\n").to_stdout
         end
 
         it '(0800)1234567 -> 0800 123 4567' do
@@ -198,11 +182,11 @@ module Source
           expect(process).to  output("0800 123 4567\n").to_stdout
         end
 
-        it '(0800) 1234567 -> 0800 123 4567' do
+        it '(0800) 1234567 -> (0800) 1234567 INV\n' do
           process = -> {
             CLI.process_input('(0800) 1234567')
           }
-          expect(process).to  output("0800 123 4567\n").to_stdout
+          expect(process).to  output("(0800) 1234567 INV\n").to_stdout
         end
 
         it '(0800) AAAAAAAAA -> 0800 222 2222' do
@@ -253,26 +237,10 @@ module Source
           expect(process).to  output("0800 876 234 DUP\n").to_stdout
         end
 
-        it '(0800) 456234 -> 0800 456 234' do
-          CLI.process_input('(0800) 456234')
-          process = -> {
-            CLI.process_input('(0800) 456234')
-          }
-          expect(process).to  output("0800 456 234 DUP\n").to_stdout
-        end
-
         it '(0800)1234567 -> 0800 123 4567' do
           CLI.process_input('(0800)1234567')
           process = -> {
             CLI.process_input('(0800)1234567')
-          }
-          expect(process).to  output("0800 123 4567 DUP\n").to_stdout
-        end
-
-        it '(0800) 1234567 -> 0800 123 4567' do
-          CLI.process_input('(0800) 1234567')
-          process = -> {
-            CLI.process_input('(0800) 1234567')
           }
           expect(process).to  output("0800 123 4567 DUP\n").to_stdout
         end
@@ -442,11 +410,11 @@ module Source
           expect(process).to  output("02 409 1234\n").to_stdout
         end
 
-        it '02 4091234 -> 02 409 1234' do
+        it '02 4091234 -> 02 4091234 INV\n' do
           process = -> {
             CLI.process_input('02 4091234')
           }
-          expect(process).to  output("02 409 1234\n").to_stdout
+          expect(process).to  output("02 4091234 INV\n").to_stdout
         end
 
         it '02 409 1234 -> 02 409 1234' do
@@ -469,14 +437,6 @@ module Source
           CLI.process_input('024091234')
           process = -> {
             CLI.process_input('024091234')
-          }
-          expect(process).to  output("02 409 1234 DUP\n").to_stdout
-        end
-
-        it '02 4091234 -> 02 409 1234' do
-          CLI.process_input('02 4091234')
-          process = -> {
-            CLI.process_input('02 4091234')
           }
           expect(process).to  output("02 409 1234 DUP\n").to_stdout
         end

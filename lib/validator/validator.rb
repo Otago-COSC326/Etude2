@@ -7,6 +7,7 @@ require 'validator/nil_validator'
 require 'validator/scott_base_validator'
 require 'validator/emergency_fragment_validator'
 require 'validator/space_validator'
+require 'validator/lowercase_valdiator'
 require 'source'
 
 module Validator
@@ -18,7 +19,8 @@ module Validator
     space_validator = SpaceValidator.new(subject, hyphen_validator)
     letter_validator = LetterValidator.new(subject, space_validator)
     parenthese_validator = ParentheseValidator.new  subject, letter_validator
-    length_validator = LengthValidator.new subject, parenthese_validator
+    lowercase_validator = LowercaseValidator.new  subject, parenthese_validator
+    length_validator = LengthValidator.new subject, lowercase_validator
     length_validator.validate
   end
 
