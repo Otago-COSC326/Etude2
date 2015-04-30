@@ -9,3 +9,4 @@ begin
 rescue LoadError
   # no rspec available
 end
+
