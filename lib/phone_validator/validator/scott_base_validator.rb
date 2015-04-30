@@ -22,7 +22,7 @@ module PhoneValidator
         target = Formatter::NoiseFormatter.new.format @subject
         valid = target.start_with? '02409'
         unless valid
-          raise ValidationError.new 'firt digit after initial must be 409'
+          raise ValidationError.new 'first digit after initial must be 409'
         end
         @next.validate if @next
       end
