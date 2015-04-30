@@ -1,14 +1,7 @@
-require 'source/version'
-require 'formatter/formatter'
-require 'validator/validator'
-require 'logger'
 require 'set'
+Dir[File.dirname(__FILE__) + '/**/*.rb'].each {|file| require file }
 
-module Source
-
-  # $validator_log = Logger.new('log/validator.log', 0, 100 * 1024 * 1024)
-  # $formatter_log = Logger.new('log/formatter.log', 0, 100 * 1024 * 1024)
-
+module PhoneValidator
   class CLI
 
     def self.reset
@@ -31,10 +24,10 @@ module Source
     def self.process_input(input)
       begin
         unless input.empty?
-          Validator.validate input
-          input = Formatter.format input
+          PhoneValidator::Validator.validate input
+          input = PhoneValidator::Formatter.format input
         end
-      rescue ValidationError => e
+      rescue PhoneValidator::Validator::ValidationError => e
         puts e.message
         return
       end

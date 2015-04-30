@@ -1,9 +1,7 @@
-require 'source'
+require 'spec_helper'
 
-module Source
-
-  describe Source::CLI do
-
+module PhoneValidator
+  describe CLI do
     describe 'process_input' do
 
       before(:each) do

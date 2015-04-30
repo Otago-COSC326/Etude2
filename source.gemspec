@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'source/version'
+require 'phone_validator/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'etude2-telephone'
-  spec.version       = Source::VERSION
+  spec.name          = 'etude2-rails'
+  spec.version       = PhoneValidator::VERSION
   spec.authors       = ['Tin Htoo Aung [3806341]']
   spec.email         = ['tin22413@student.otago.ac.nz']
 
