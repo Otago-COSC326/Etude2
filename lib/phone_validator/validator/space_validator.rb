@@ -43,7 +43,7 @@ module PhoneValidator
             valid = false
         end
         unless valid
-          raise ValidationError.new "#{@subject} INV"
+          raise ValidationError.new 'invalid use of space'
         end
         @next.validate if @next
       end

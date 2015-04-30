@@ -19,7 +19,7 @@ module PhoneValidator
           return @next.validate
         end
         if @subject.match /[a-z]/
-          raise ValidationError.new "#{@subject} INV"
+          raise ValidationError.new 'letter must be uppercase'
         end
         @next.validate if @next
       end

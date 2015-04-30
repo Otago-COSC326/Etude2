@@ -10,9 +10,7 @@ module PhoneValidator
 
       def supported?
         target = @subject.split(/^(\(*)(0800|0508|0900)(\)*)/)[4]
-        supported = !(target =~ /[a-zA-Z]+/).nil?
-        # $validator_log.info "LetterValidator => not supported : #{@subject}" unless supported
-        supported
+        !(target =~ /[a-zA-Z]+/).nil?
       end
 
       def validate
@@ -37,7 +35,7 @@ module PhoneValidator
           end
         end
         unless valid
-          raise ValidationError.new "#{@subject} INV"
+          raise ValidationError.new 'invalid number with letter composition.'
         end
         @next.validate if @next
       end

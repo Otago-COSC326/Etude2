@@ -9,9 +9,7 @@ module PhoneValidator
       end
 
       def supported?
-        supported = (@subject =~ (/(-)+/))
-        # $validator_log.info "HyphenValidator => not supported : #{@subject}" unless supported
-        supported
+        (@subject =~ (/(-)+/))
       end
 
       def validate
@@ -20,8 +18,7 @@ module PhoneValidator
           return @next.validate
         end
         if @subject.match /[a-zA-Z]/
-          # $validator_log.error "HyphenValidator => subject : #{@subject}, Validation Failed"
-          raise ValidationError.new "#{@subject} INV"
+          raise ValidationError.new 'hypen is not allowed while using alphabets'
         end
         initial_code_regex = /^(\(*)(0800|0508|0900)(\)*)/
         area_code_regex = /^(((02)(?!1|2|5|7))|(0[3-9]))/
@@ -67,7 +64,7 @@ module PhoneValidator
         end
 
         unless valid
-          raise ValidationError.new "#{@subject} INV"
+          raise ValidationError.new 'invalid format with hyphen'
         end
         @next.validate if @next
       end

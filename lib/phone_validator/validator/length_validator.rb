@@ -44,7 +44,7 @@ module PhoneValidator
           valid = (target.length == 9)
         end
         unless valid
-          raise ValidationError.new "#{@subject} INV"
+          raise ValidationError.new 'invalid length'
         end
         @next.validate if @next
       end

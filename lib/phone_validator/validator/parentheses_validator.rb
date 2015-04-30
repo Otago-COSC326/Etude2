@@ -19,7 +19,7 @@ module PhoneValidator
           return @next.validate
         end
         unless @subject =~ /\(\d{2,4}\)/
-          raise ValidationError.new "#{@subject} INV"
+          raise ValidationError.new 'invalid use of parentheses'
         end
         @next.validate if @next
       end
